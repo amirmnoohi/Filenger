@@ -105,7 +105,7 @@ def clean():
 
 def check_progress(size):
     try:
-        progress = ProgressBar(size * 1e6, width=40, fmt=ProgressBar.DEFAULT, symbol="#")
+        progress = ProgressBar(size * 2**20, width=40, fmt=ProgressBar.DEFAULT, symbol="#")
         while progress.current < progress.total:
             time.sleep(0.001)
             progress.current = os.path.getsize("output.txt")
@@ -118,9 +118,9 @@ def check_progress(size):
 def run(size, numberOfWords, file):
     try:
         i = 0
-        while os.path.getsize("output.txt") < size * 1e6:
+        while os.path.getsize("output.txt") < size * 2**20:
             string = json_data[random.randint(0, json_size - 1)]
-            if os.path.getsize("output.txt") + len(string) > size * 1e6:
+            if os.path.getsize("output.txt") + len(string) > size * 2**20:
                 break
             if i == numberOfWords:
                 i = 0
@@ -152,13 +152,13 @@ if __name__ == '__main__':
         file.close()
         clean()
         print(bcolors.OKGREEN + "[+] Data Loaded Successfully" + bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 1e6)
+        print(bcolors.OKGREEN + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 2**20)
               + " MBytes " + bcolors.ENDC)
     except KeyboardInterrupt:
         print(bcolors.FAIL + "\n[-] Keyboard Interrupt Pressed" + bcolors.ENDC)
-        print(bcolors.WARNING + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 1e6)
+        print(bcolors.WARNING + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 2**20)
               + " MBytes " + bcolors.ENDC)
     except:
         print(bcolors.FAIL + "\n[-] Generating Cancelled" + bcolors.ENDC)
-        print(bcolors.WARNING + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 1e6)
+        print(bcolors.WARNING + "[+] Data Generated Size : " + str(os.path.getsize("output.txt") / 2**20)
               + " MBytes " + bcolors.ENDC)
